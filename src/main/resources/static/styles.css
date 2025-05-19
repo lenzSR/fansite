@@ -1,0 +1,297 @@
+/* Custom styles for the Tayori fan page */
+
+/* Font for monospace text */
+.font-geist-mono {
+    font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    letter-spacing: -0.03em;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Header styles */
+header {
+    z-index: 50;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(31, 31, 31, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(113, 113, 122, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(161, 161, 170, 0.5);
+}
+
+/* Message bubbles in chat section */
+.user-message {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+}
+
+.user-message-bubble {
+    background-color: rgba(99, 102, 241, 0.2);
+    border-radius: 12px 12px 0 12px;
+    padding: 12px 16px;
+    max-width: 80%;
+    color: #f4f4f5;
+}
+
+.assistant-message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.assistant-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #6366f1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.assistant-message-bubble {
+    background-color: rgba(63, 63, 70, 0.5);
+    border-radius: 12px 12px 12px 0;
+    padding: 12px 16px;
+    max-width: 80%;
+    color: #e4e4e7;
+    line-height: 1.5;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0) translateX(-50%); }
+    50% { transform: translateY(-10px) translateX(-50%); }
+}
+
+.user-message, .assistant-message {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Hero animations */
+.hero-title {
+    opacity: 0;
+    animation: fadeInUp 1.5s ease-out 0.3s forwards; /* 从0.8秒增加到1.5秒 */
+}
+
+.hero-subtitle {
+    opacity: 0;
+    animation: fadeInUp 1.5s ease-out 0.6s forwards; /* 从0.8秒增加到1.5秒，延迟从0.4秒增加到0.6秒 */
+}
+
+.hero-description {
+    opacity: 0;
+    animation: fadeInUp 1.5s ease-out 0.9s forwards; /* 从0.8秒增加到1.5秒，延迟从0.6秒增加到0.9秒 */
+}
+
+.hero-button {
+    opacity: 0;
+    animation: scaleIn 1.5s ease-out 1.2s forwards; /* 从0.8秒增加到1.5秒，延迟从0.8秒增加到1.2秒 */
+}
+
+/* Hero section styles */
+#hero-section {
+    height: 100vh; /* Ensure it takes up the full viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-bg-image {
+    transition: transform 0.3s ease-out;
+    object-position: center;
+}
+
+/* Ensure content is vertically centered */
+#hero-section > div.relative {
+    padding-top: 0;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
+}
+
+/* Float animation */
+.animate-float {
+    animation: float 6s ease-in-out infinite; /* 从4秒增加到6秒 */
+}
+
+/* Bounce animation */
+.animate-bounce-custom {
+    animation: bounce 3s ease-in-out infinite; /* 从1.5秒增加到3秒 */
+}
+
+/* Scroll animations */
+[data-scroll-animation] {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease; /* 恢复到0.6秒，添加filter过渡 */
+    will-change: opacity, transform, filter;
+    filter: blur(5px); /* 添加虚化效果 */
+}
+
+[data-scroll-animation="slide-up"] {
+    transform: translateY(50px);
+}
+
+[data-scroll-animation="fade-in"] {
+    opacity: 0;
+}
+
+/* 当元素进入视口时的状态 */
+[data-scroll-animation].in-view {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0); /* 清除虚化效果 */
+}
+
+/* 确保动画可以重复播放 - 重置动画状态 */
+[data-scroll-animation]:not(.in-view) {
+    opacity: 0;
+    filter: blur(5px);
+    transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease;
+}
+
+[data-scroll-animation="slide-up"]:not(.in-view) {
+    transform: translateY(50px);
+}
+
+/* Ensure elements are visible by default if JavaScript is disabled */
+.no-js [data-scroll-animation],
+html.no-js [data-scroll-animation] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Fallback for browsers without JavaScript or if animations fail */
+@media (prefers-reduced-motion: reduce) {
+    [data-scroll-animation] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+/* Card animations */
+.card-hover {
+    transition: transform 0.6s ease, box-shadow 0.6s ease; /* 从0.3秒增加到0.6秒 */
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Staggered animations - 调整为更适中的延迟 */
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+.stagger-6 { transition-delay: 0.6s; }
+
+/* Hero section transition */
+#hero-section {
+    transition: opacity 0.8s ease, transform 0.8s ease; /* 从0.3秒增加到0.8秒 */
+}
+
+#hero-section.scrolled {
+    opacity: 0.8;
+    transform: scale(0.98);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .user-message-bubble, .assistant-message-bubble {
+        max-width: 90%;
+    }
+}
+
+/* Typing indicator */
+.typing-indicator {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.typing-indicator span {
+    height: 6px;
+    width: 6px;
+    background-color: #9ca3af;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 3px;
+    animation: typing 1.3s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+    margin-right: 0;
+}
+
+/* Typing animation keyframes */
+@keyframes typing {
+    0% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(-5px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.4; }
+}

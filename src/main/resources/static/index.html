@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tayori - 日本三人音乐组合 | 非官方粉丝页面</title>
+    <script>
+        // Remove no-js class if JavaScript is enabled
+        document.documentElement.classList.remove('no-js');
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tayori-dark': '#333333',
+                        'tayori-mid': '#666666',
+                        'tayori-light': '#f8f9fa',
+                        'tayori-accent': '#6366f1', // indigo-500
+                        'tayori-gray': '#f1f3f5', // 浅灰色
+                        'tayori-gray-dark': '#dee2e6', // 深灰色
+                        'tayori-text': '#495057', // 文本颜色
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                         // Added Geist Mono for display font
+                         'geist-mono': ['"Geist Mono"', 'monospace'],
+                    },
+                     // Added custom animation for floating effect
+                     keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        },
+                        'bounce-custom': {
+                            '0%, 100%': {
+                                transform: 'translateY(0)',
+                                animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
+                            },
+                            '50%': {
+                                transform: 'translateY(-25%)',
+                                animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+                            },
+                        },
+                     },
+                     animation: {
+                         float: 'float 3s ease-in-out infinite',
+                         'bounce-custom': 'bounce-custom 1s infinite',
+                     },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-icon-font@1.0.0/style.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/event-source-polyfill@1.0.31/src/eventsource.min.js"></script>
+</head>
+<body class="bg-white text-gray-700 min-h-screen flex flex-col">
+    <script>
+        window.addEventListener("wheel", (e)=> {
+            const isPinching = e.ctrlKey
+            if(isPinching) e.preventDefault()
+        }, { passive: false })
+    </script>
+
+    <header class="fixed top-0 left-0 right-0 w-full backdrop-blur-lg bg-white/90 border-b border-tayori-gray-dark/30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center">
+                        <svg class="h-8 w-auto text-tayori-accent" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path d="M20 10h80M20 20h80M20 30h40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M10 5L15 20L10 35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold tracking-wider font-geist-mono text-tayori-dark">tayori fansite</span>
+                    </a>
+                </div>
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="#about" class="text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">关于乐队</a>
+                    <a href="#members" class="text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">成员介绍</a>
+                    <a href="#music" class="text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">音乐作品</a>
+                    <a href="#chat" class="text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">粉丝问答</a>
+                    <a href="#connect" class="text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">官方链接</a>
+                </nav>
+                <div class="flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-tayori-text hover:text-tayori-accent hover:bg-tayori-gray focus:outline-none">
+                        <span class="sr-only">打开菜单</span>
+                        <i data-lucide="menu text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden border-t border-tayori-gray-dark/30 bg-white/95">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-tayori-text hover:bg-tayori-gray hover:text-tayori-accent">关于乐队</a>
+                <a href="#members" class="block px-3 py-2 rounded-md text-base font-medium text-tayori-text hover:bg-tayori-gray hover:text-tayori-accent">成员介绍</a>
+                <a href="#music" class="block px-3 py-2 rounded-md text-base font-medium text-tayori-text hover:bg-tayori-gray hover:text-tayori-accent">音乐作品</a>
+                <a href="#chat" class="block px-3 py-2 rounded-md text-base font-medium text-tayori-text hover:bg-tayori-gray hover:text-tayori-accent">粉丝问答</a>
+                <a href="#connect" class="block px-3 py-2 rounded-md text-base font-medium text-tayori-text hover:bg-tayori-gray hover:text-tayori-accent">官方链接</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-16"><!-- 添加顶部内边距，等于header的高度 -->
+        <section class="relative overflow-hidden min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-tayori-gray" aria-label="头图" id="hero-section">
+             <div class="absolute inset-0 z-0 overflow-hidden">
+                 <img src="https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3576432644412132805" alt="Tayori乐队" class="hero-bg-image w-full h-full object-cover opacity-20 mix-blend-multiply" id="parallax-bg">
+            </div>
+            <div class="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center py-16">
+                <h1 class="hero-title text-6xl md:text-7xl font-bold tracking-tight text-tayori-dark mb-6 font-geist-mono">
+                    tayori
+                </h1>
+                <p class="hero-subtitle mt-4 text-2xl text-tayori-mid max-w-2xl">
+                    「日々に寄り添う、三つの音色。」
+                </p>
+                <p class="hero-description mt-8 text-xl text-tayori-text max-w-3xl">
+                    新世代三人音乐组合，用音乐编织情感的纽带
+                </p>
+                <div class="mt-12">
+                    <a href="#music"
+                    class="hero-button inline-flex items-center gap-2 px-8 py-4 bg-gray-100 text-gray-800 text-lg font-medium rounded-lg transition-all duration-300 shadow-sm hover:shadow-md hover:bg-gray-200 hover:text-black">
+                        <span>聆听音乐</span>
+                        <i data-lucide="play" class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+
+
+                <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-custom">
+                    <a href="#about" class="text-tayori-mid opacity-70 hover:opacity-100 transition-opacity">
+                        <i data-lucide="chevron-down"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 bg-white" aria-label="关于乐队">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="lg:text-center mb-16" data-scroll-animation="fade-in">
+                    <p class="text-base text-tayori-accent font-semibold tracking-wide uppercase">关于乐队</p>
+                    <h2 class="mt-2 text-3xl leading-8 font-bold tracking-tight text-tayori-dark sm:text-4xl">
+                        tayori的音乐之旅
+                    </h2>
+                    <div class="mt-4 max-w-3xl mx-auto text-xl text-tayori-text lg:mx-auto">
+                        <div class="w-12 h-1 bg-tayori-accent mx-auto my-6"></div>
+                    </div>
+                </div>
+
+                <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
+                    <div class="relative" data-scroll-animation="slide-up">
+                        <img src="https://p2.bahamut.com.tw/HOME/creationCover/04/0005868304_B.JPG" alt="Tayori音乐概念图" class="rounded-lg shadow-xl w-full">
+                        <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-tayori-accent rounded-lg opacity-20 animate-float"></div>
+                    </div>
+                    <div class="mt-10 lg:mt-0 space-y-6 text-tayori-text" data-scroll-animation="slide-up">
+                        <p class="stagger-1">
+                            <strong class="text-tayori-dark">tayori是由作曲家raku与tazuneru组成的双人创作组合islet为起点</strong>，在与才华横溢的主唱isui相遇并激发出音乐的火花后，于2023年7月22日正式以"tayori"之名，开启了全新的三人音乐企划。
+                        </p>
+                        <p class="stagger-2">
+                            <strong class="text-tayori-dark">"tayori" (便り) 这个名字</strong>，寄托了成员们希望在某些特别的时刻，他们的音乐能够成为听众心灵的依靠和慰藉，如同远方传来的温暖讯息。
+                        </p>
+                        <p class="stagger-3">
+                            <strong class="text-tayori-dark">tayori的音乐展现了多元的包容性</strong>，不拘泥于特定风格，致力于探索声音的无限可能，创造能够触动人心的旋律。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="members" class="py-20 bg-tayori-gray" aria-label="成员介绍">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16" data-scroll-animation="fade-in">
+                    <p class="text-base text-tayori-accent font-semibold tracking-wide uppercase">成员介绍</p>
+                    <h2 class="mt-2 text-3xl leading-8 font-bold tracking-tight text-tayori-dark sm:text-4xl">
+                        遇见tayori成员
+                    </h2>
+                    <div class="mt-4 max-w-2xl mx-auto text-xl text-tayori-text">
+                        <div class="w-12 h-1 bg-tayori-accent mx-auto my-6"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark hover:border-tayori-accent transition-all card-hover stagger-1" data-scroll-animation="slide-up">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3474967578479854734" alt="isui" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-tayori-dark mb-2 font-geist-mono">isui (倚水)</h3>
+                            <p class="text-tayori-accent mb-4 inline-flex items-center">
+                                <i data-lucide="mic" class="text-base mr-2 animate-float"></i>
+                                <span>主唱 (Vocalist)</span>
+                            </p>
+                            <p class="text-tayori-text mb-4">
+                                <strong class="text-tayori-dark">「灵魂歌者，情感的传递者」</strong>
+                            </p>
+                            <p class="text-tayori-text">
+                                tayori的核心主唱，拥有清澈而富有感染力的声线。isui的歌声为乐队的乐曲注入灵魂，细腻地诠释每一份情感，引领听众进入tayori的音乐世界。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark hover:border-tayori-accent transition-all card-hover stagger-2" data-scroll-animation="slide-up">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3582955785074313224" alt="raku" class="w-full h-full object-cover object-center">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-tayori-dark mb-2 font-geist-mono">raku</h3>
+                            <p class="text-tayori-accent mb-4 inline-flex items-center">
+                                <i data-lucide="music" class="text-base mr-2 animate-float"></i>
+                                <span>作曲 (Composer)</span>
+                            </p>
+                            <p class="text-tayori-text mb-4">
+                                <strong class="text-tayori-dark">「旋律的织造者，音乐的构筑师」</strong>
+                            </p>
+                            <p class="text-tayori-text">
+                                作为乐队的初代成员之一（前islet组合），raku是tayori音乐创作的核心。他擅长捕捉灵感，编织出多元且富有层次的旋律，为tayori的音乐奠定了坚实的基础。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark hover:border-tayori-accent transition-all card-hover stagger-3" data-scroll-animation="slide-up">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3603977455511850333" alt="tazuneru" class="w-full h-full object-cover object-center">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-tayori-dark mb-2 font-geist-mono">tazuneru</h3>
+                            <p class="text-tayori-accent mb-4 inline-flex items-center">
+                                <i data-lucide="sliders" class="text-base mr-2 animate-float"></i>
+                                <span>音乐制作 (Producer)</span>
+                            </p>
+                            <p class="text-tayori-text mb-4">
+                                <strong class="text-tayori-dark">「音景的雕琢者，氛围的营造家」</strong>
+                            </p>
+                            <p class="text-tayori-text">
+                                同为乐队的初代成员（前islet组合），tazuneru在音乐制作和编曲方面扮演着关键角色。他精于音色的打磨和整体氛围的营造，赋予tayori作品独特的质感和深度。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="music" class="py-20 bg-white" aria-label="音乐作品">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16" data-scroll-animation="fade-in">
+                    <p class="text-base text-tayori-accent font-semibold tracking-wide uppercase">音乐作品</p>
+                    <h2 class="mt-2 text-3xl leading-8 font-bold tracking-tight text-tayori-dark sm:text-4xl">
+                        聆听tayori
+                    </h2>
+                    <div class="mt-4 max-w-2xl mx-auto text-xl text-tayori-text">
+                        <div class="w-12 h-1 bg-tayori-accent mx-auto my-6"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-tayori-gray rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark group hover:border-tayori-accent transition-all card-hover stagger-1" data-scroll-animation="slide-up">
+                        <div class="aspect-video overflow-hidden bg-tayori-accent/5 relative group">
+                            <img src="assets/月の唄.jpeg" alt="月の唄" class="w-full h-full object-cover transition-transform group-hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-tayori-dark/60 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button class="bg-white/90 text-tayori-accent rounded-full w-16 h-16 flex items-center justify-center hover:bg-white transition-colors animate-float">
+                                    <i data-lucide="play" class="text-2xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-tayori-dark font-geist-mono">月の唄</h3>
+                            <p class="text-tayori-text mt-2 flex items-center">
+                                <i data-lucide="calendar" class="text-sm mr-2"></i>
+                                <span>2025年</span>
+                            </p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <div class="flex space-x-2">
+                                    <a href="#" class="text-tayori-accent hover:text-tayori-dark transition-colors">
+                                        <i data-lucide="youtube" class="text-xl"></i>
+                                    </a>
+                                    <a href="#" class="text-tayori-accent hover:text-tayori-dark transition-colors">
+                                        <i data-lucide="music" class="text-xl"></i>
+                                    </a>
+                                </div>
+                                <span class="text-xs text-tayori-text font-medium">音乐视频</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-tayori-gray rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark group hover:border-tayori-accent transition-all card-hover stagger-2" data-scroll-animation="slide-up">
+                        <div class="aspect-video overflow-hidden bg-tayori-accent/5 relative group">
+                            <img src="assets/メメント (Memento).png" alt="メメント (Memento)" class="w-full h-full object-cover transition-transform group-hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-tayori-dark/60 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button class="bg-white/90 text-tayori-accent rounded-full w-16 h-16 flex items-center justify-center hover:bg-white transition-colors animate-float">
+                                    <i data-lucide="play" class="text-2xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-tayori-dark font-geist-mono">メメント (Memento)</h3>
+                            <p class="text-tayori-text mt-2 flex items-center">
+                                <i data-lucide="calendar" class="text-sm mr-2"></i>
+                                <span>2024年</span>
+                            </p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <div class="flex space-x-2">
+                                    <a href="#" class="text-tayori-accent hover:text-tayori-dark transition-colors">
+                                        <i data-lucide="youtube" class="text-xl"></i>
+                                    </a>
+                                    <a href="#" class="text-tayori-accent hover:text-tayori-dark transition-colors">
+                                        <i data-lucide="music" class="text-xl"></i>
+                                    </a>
+                                </div>
+                                <span class="text-xs text-tayori-text font-medium">音乐视频</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-tayori-gray rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark group hover:border-tayori-accent transition-all card-hover stagger-3" data-scroll-animation="slide-up">
+                        <div class="aspect-video overflow-hidden bg-tayori-accent/5 relative group">
+                            <img src="https://p2.bahamut.com.tw/HOME/creationCover/04/0005868304_B.JPG" alt="風のたより (Kaze no Tayori)" class="w-full h-full object-cover transition-transform group-hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-tayori-dark/60 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button class="bg-white/90 text-tayori-accent rounded-full w-16 h-16 flex items-center justify-center hover:bg-white transition-colors animate-float">
+                                    <i data-lucide="play" class="text-2xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-tayori-dark font-geist-mono">風のたより (Kaze no Tayori)</h3>
+                            <p class="text-tayori-text mt-2 flex items-center">
+                                <i data-lucide="calendar" class="text-sm mr-2"></i>
+                                <span>2023年</span>
+                            </p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <div class="flex space-x-2">
+                                    <a href="#" class="text-tayori-accent hover:text-tayori-dark transition-colors">
+                                        <i data-lucide="youtube" class="text-xl"></i>
+                                    </a>
+                                    <a href="#" class="text-tayori-accent hover:text-tayori-dark transition-colors">
+                                        <i data-lucide="music" class="text-xl"></i>
+                                    </a>
+                                </div>
+                                <span class="text-xs text-tayori-text font-medium">专辑单曲</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12" data-scroll-animation="fade-in">
+                    <a href="https://music.163.com/artist?id=58681002" target="_blank" class="inline-flex items-center px-6 py-3 border border-tayori-accent text-base font-medium rounded-md text-tayori-dark hover:bg-tayori-gray-dark hover:border-tayori-accent transition-all animate-float">
+                        更多音乐
+                        <i data-lucide="external-link" class="ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="chat" class="py-20 bg-tayori-gray" aria-label="粉丝问答">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16" data-scroll-animation="fade-in">
+                    <p class="text-base text-tayori-accent font-semibold tracking-wide uppercase">粉丝问答</p>
+                    <h2 class="mt-2 text-3xl leading-8 font-bold tracking-tight text-tayori-dark sm:text-4xl">
+                        与tayori对话
+                    </h2>
+                    <div class="mt-4 max-w-2xl mx-auto text-xl text-tayori-text">
+                        <div class="w-12 h-1 bg-tayori-accent mx-auto my-6"></div>
+                        <p class="text-base text-tayori-text mt-6">想了解关于tayori的更多信息？尝试提问，探索乐队的故事</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark card-hover" data-scroll-animation="slide-up">
+                    <div class="bg-tayori-accent py-4 px-6 border-b border-tayori-accent/20 flex items-center">
+                        <div class="flex items-center space-x-3">
+                            <div class="h-8 w-8 bg-white rounded-full flex items-center justify-center text-tayori-accent animate-float">
+                                <i data-lucide="bot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-white">tayori Chat</h3>
+                                <p class="text-xs text-white/80">探索乐队的音乐世界</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chat-messages" class="p-4 h-96 overflow-y-auto space-y-6">
+                        <!-- System Status Message -->
+<!--                        <div class="mb-6">-->
+<!--                            <div class="flex items-start">-->
+<!--                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-4">-->
+<!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-gray-600 lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>-->
+<!--                                </div>-->
+<!--                                <div class="flex-1">-->
+<!--                                    <div class="font-medium mb-1">tayori Chat | AI机器人</div>-->
+<!--                                    <div class="text-sm">你好，我是tayori Chat，你可以问我关于tayori的任何问题！</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+
+                    <div class="border-t border-tayori-gray-dark/30 p-4">
+                        <div class="relative bg-tayori-gray">
+                            <input id="chat-input" type="text" placeholder="向tayori发送消息..." class="bg-transparent border-0 flex-1 py-3 px-4 text-tayori-text placeholder-gray-500 focus:outline-none focus:ring-0">
+                            <div class="absolute right-2 bottom-2 flex items-center space-x-2">
+                                <button id="send-message" class="p-1 text-gray-400 hover:text-gray-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-xs text-tayori-text/70 mt-2 ml-1">输入"帮助"可获取预设问题列表</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="connect" class="py-20 bg-white" aria-label="官方链接">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16" data-scroll-animation="fade-in">
+                    <p class="text-base text-tayori-accent font-semibold tracking-wide uppercase">官方链接</p>
+                    <h2 class="mt-2 text-3xl leading-8 font-bold tracking-tight text-tayori-dark sm:text-4xl">
+                        关注tayori
+                    </h2>
+                    <div class="mt-4 max-w-2xl mx-auto text-xl text-tayori-text">
+                        <div class="w-12 h-1 bg-tayori-accent mx-auto my-6"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <a href="https://tayori.bitfan.id/" target="_blank" class="bg-tayori-gray rounded-xl overflow-hidden p-6 text-center border border-tayori-gray-dark hover:border-tayori-accent transition-all flex flex-col items-center card-hover stagger-1" data-scroll-animation="slide-up">
+                        <i data-lucide="globe" class=" text-3xl text-tayori-accent mb-3 animate-float"></i>
+                        <h3 class="text-lg font-semibold text-tayori-dark mb-1">官方网站</h3>
+                        <p class="text-sm text-tayori-text">tayori.bitfan.id</p>
+                    </a>
+
+                    <a href="https://www.instagram.com/tayori_tri/" target="_blank" class="bg-tayori-gray rounded-xl overflow-hidden p-6 text-center border border-tayori-gray-dark hover:border-tayori-accent transition-all flex flex-col items-center card-hover stagger-2" data-scroll-animation="slide-up">
+                        <i data-lucide="instagram" class=" text-3xl text-tayori-accent mb-3 animate-float"></i>
+                        <h3 class="text-lg font-semibold text-tayori-dark mb-1">Instagram</h3>
+                        <p class="text-sm text-tayori-text">@tayori_tri</p>
+                    </a>
+
+                    <a href="https://space.bilibili.com/309109274/" target="_blank" class="bg-tayori-gray rounded-xl overflow-hidden p-6 text-center border border-tayori-gray-dark hover:border-tayori-accent transition-all flex flex-col items-center card-hover stagger-3" data-scroll-animation="slide-up">
+                        <i data-lucide="play" class=" text-3xl text-tayori-accent mb-3 animate-float"></i>
+                        <h3 class="text-lg font-semibold text-tayori-dark mb-1">哔哩哔哩</h3>
+                        <p class="text-sm text-tayori-text">tayori_official</p>
+                    </a>
+
+                    <a href="https://music.163.com/artist?id=58681002" target="_blank" class="bg-tayori-gray rounded-xl overflow-hidden p-6 text-center border border-tayori-gray-dark hover:border-tayori-accent transition-all flex flex-col items-center card-hover stagger-4" data-scroll-animation="slide-up">
+                        <i data-lucide="music" class=" text-3xl text-tayori-accent mb-3 animate-float"></i>
+                        <h3 class="text-lg font-semibold text-tayori-dark mb-1">网易云音乐</h3>
+                        <p class="text-sm text-tayori-text">tayori</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-8 bg-tayori-dark border-t border-tayori-gray-dark" data-scroll-animation="fade-in">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-white/80 text-sm">© 2025 tayori Fan Page. This is an unofficial fan site.</p>
+                </div>
+                <div>
+                    <p class="text-white/80 text-sm">Built by tayori's fans.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js?v=1.0.1"></script>
+    <script src="chat-app.js?v=1.0.1"></script>
+</body>
+</html>
