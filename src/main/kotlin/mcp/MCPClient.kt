@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.example.mcp.model.*
+import org.example.util.copyChatMessage
 import java.util.concurrent.TimeUnit
 
 class MCPClient : AutoCloseable {
@@ -89,15 +90,43 @@ class MCPClient : AutoCloseable {
             Message(role = "user", content = query)
         )
 
+//        while (true) {
+//            val response = sendMessages(messages, tools)
+//
+//            val assistantMsg = response.choices.first().message
+//            emit(json.encodeToString(assistantMsg))
+//            messages.add(assistantMsg)
+//
+//            assistantMsg.tool_calls?.forEach { call ->
+//                val result = mcp.callTool(call.function.name, call.function.arguments.jsonToMap())?.content
+//                    ?.joinToString("\n") { (it as? TextContent)?.text ?: "" }
+//                    ?: ""
+//
+//                messages.add(Message(
+//                    role = "tool",
+//                    content = result,
+//                    tool_call_id = call.id
+//                ))
+//                emit(json.encodeToString(messages.last()))
+//            } ?: break
+//        }
         while (true) {
-            val response = sendMessages(messages, tools)
+            val responseFlow = streamMessages(messages, tools)
 
-            val assistantMsg = response.choices.first().message
-            emit(json.encodeToString(assistantMsg))
-            messages.add(assistantMsg)
+            val deltaMessage = Message()
 
-            assistantMsg.tool_calls?.forEach { call ->
-                val result = mcp.callTool(call.function.name, call.function.arguments.jsonToMap())?.content
+            responseFlow.collect { part ->
+                json.decodeFromString<ChatResponse>(part).choices.first().delta?.let { delta ->
+                    println(json.encodeToString(delta))
+                    deltaMessage.copyChatMessage(delta)
+                    emit(json.encodeToString(delta))
+                }
+            }
+
+            messages.add(deltaMessage)
+
+            deltaMessage.tool_calls?.forEach { call ->
+                val result = mcp.callTool(call.function?.name ?: "", call.function?.arguments?.jsonToMap() ?: hashMapOf())?.content
                     ?.joinToString("\n") { (it as? TextContent)?.text ?: "" }
                     ?: ""
 
@@ -106,6 +135,7 @@ class MCPClient : AutoCloseable {
                     content = result,
                     tool_call_id = call.id
                 ))
+                println(json.encodeToString(messages.last()))
                 emit(json.encodeToString(messages.last()))
             } ?: break
         }
@@ -128,7 +158,8 @@ class MCPClient : AutoCloseable {
         val requestBody = ChatRequest(
             model = "deepseek-chat",
             messages = messages,
-            tools = tools
+            tools = tools,
+            stream = false
         ).let {
             val request = json.encodeToString(it)
             request
@@ -145,6 +176,49 @@ class MCPClient : AutoCloseable {
         val responseBody = response.body?.string() ?: error("Empty response")
         return json.decodeFromString<ChatResponse>(responseBody)
     }
+
+    private fun streamMessages(messages: List<Message>, tools: List<Tool>): Flow<String> = flow {
+        val client = OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(1, TimeUnit.MINUTES)
+            .build()
+
+        val requestBody = ChatRequest(
+            model = "deepseek-chat",
+            messages = messages,
+            tools = tools,
+            stream = true // 开启流式
+        ).let {
+            json.encodeToString(it)
+        }.toRequestBody("application/json".toMediaType())
+
+        val request = Request.Builder()
+            .url("https://api.deepseek.com/v1/chat/completions")
+            .addHeader("Authorization", "Bearer sk-254dcb5c88454c2ea793804e3b76bab8")
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).execute().use { response ->
+            val source = response.body?.source() ?: error("No response body")
+
+            val buffer = okio.Buffer()
+
+            while (!source.exhausted()) {
+                source.read(buffer, 8192)
+                while (true) {
+                    val line = buffer.readUtf8Line() ?: break
+
+                    if (line.startsWith("data: ")) {
+                        val content = line.removePrefix("data: ").trim()
+                        if (content == "[DONE]") return@flow
+                        emit(content)
+                    }
+                }
+            }
+        }
+    }
+
 
     private fun String.jsonToMap(): Map<String, String> {
         return Json.parseToJsonElement(this).jsonObject

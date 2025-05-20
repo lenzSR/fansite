@@ -185,6 +185,12 @@ header {
     transform: translateY(50px);
 }
 
+[data-scroll-animation].in-view {
+    opacity: 1;
+    transform: translateY(0); /* Reset transform for slide-up */
+}
+
+
 [data-scroll-animation="fade-in"] {
     opacity: 0;
 }

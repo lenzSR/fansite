@@ -4,32 +4,41 @@ import kotlinx.serialization.Serializable
 
 // 定义数据模型（使用 kotlinx.serialization）
 @Serializable
-data class Message(
-    val role: String,
-    val content: String,
-    val tool_calls: List<ToolCall>? = null,
-    val tool_call_id: String? = null
-)
+class Message {
+    var role: String? = null
+    var content: String? = null
+    var tool_calls: List<ToolCall>? = null
+    var tool_call_id: String? = null
+
+    constructor()
+
+    constructor(role: String, content: String, tool_call_id: String? = null) {
+        this.role = role
+        this.content = content
+        this.tool_call_id = tool_call_id
+    }
+}
 
 @Serializable
-data class ToolCall(
-    val id: String,
-    val function: FunctionCall,
-    val index: Int,
-    val type: String
-)
+class ToolCall {
+    var id: String? = null
+    var function: FunctionCall? = null
+    var index: Int? = null
+    var type: String? = null
+}
 
 @Serializable
-data class FunctionCall(
-    val name: String,
-    val arguments: String
-)
+class FunctionCall {
+    var name: String? = null
+    var arguments: String? = null
+}
 
 @Serializable
 data class ChatRequest(
     val model: String,
     val messages: List<Message>,
-    val tools: List<Tool>
+    val tools: List<Tool>,
+    val stream: Boolean
 )
 
 @Serializable
@@ -65,6 +74,7 @@ data class ChatResponse(
 
 @Serializable
 data class Choice(
-    val message: Message
+    val message: Message? = null,
+    val delta: Message? = null
 )
 

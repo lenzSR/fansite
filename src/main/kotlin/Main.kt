@@ -53,7 +53,7 @@ fun main() {
                     try {
                         // 模拟MCP + LLM对话，若需要使用MCPClient，请准备自己的SSE MCP服务器和DeepSeek API KEY，并取消注释以下代码
                         val resultFlow = MCPConnectionManager.getClient().executeConversation(message)
-//                        val resultFlow = MockUtil.send()
+//                        val resultFlow = MockUtil.sendStreamMockStr()
 
                         resultFlow.collect { part ->
                             withContext(Dispatchers.IO) {

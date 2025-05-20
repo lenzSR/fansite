@@ -82,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function simulateBotResponse(userMessage) {
         // Add typing indicator
         const typingElement = document.createElement('div');
+        currentConversationId = 'conversation-' + currentConversation.sessionId + '-' + currentConversation.messages.length;
+
         typingElement.className = 'mb-6 typing-container';
         typingElement.innerHTML = `
             <div class="flex items-start">
@@ -90,7 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="flex-1">
                     <div class="font-medium mb-1">tayori Chat | AI 机器人</div>
-                    <div class="typing-indicator">
+                    <div id="${currentConversationId}">
+                    </div>
+                    <div id="${currentConversationId}-typing" class="typing-indicator">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -160,6 +164,137 @@ document.addEventListener('DOMContentLoaded', function() {
     loadMessages(currentConversation);
 });
 
+// // Add a message to the UI
+// function addMessageToUI(message, isLoad = false) {
+//     if (message.sender === 'user') {
+//         const messageElement = document.createElement('div');
+//         messageElement.className = 'mb-6';
+//         messageElement.innerHTML = `
+//             <div class="flex items-start">
+//                 <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-white mr-4">
+//                     L
+//                 </div>
+//                 <div class="flex-1">
+//                     <div class="font-medium mb-1">${message.name} <span class="text-xs text-gray-500">${message.time}</span></div>
+//                     <div class="text-sm">
+//                         ${message.content}
+//                     </div>
+//                 </div>
+//             </div>
+//         `;
+//         chatMessages.appendChild(messageElement);
+//     } else {
+//         if (message.tool_calls && message.tool_calls.length > 0) {
+//             const messageOutput = document.getElementById(currentConversationId);
+//             if (messageOutput) {
+//                 const messageElement = document.createElement('details');
+//                 messageElement.className = 'border-t first:border-t-0 border-gray-200 bg-gray-50';
+//                 messageElement.id = message.tool_calls[0].id + '-details';
+//                 messageElement.innerHTML = `
+//                     <summary class="cursor-pointer text-sm font-semibold select-none px-4 py-2 bg-gray-100 rounded-t-md">
+//                         ${message.tool_calls[0].function.name} <span id="${currentConversationId}-${message.tool_calls[0].id}-status" class="ml-2 text-gray-500">✖ 未完成</span>
+//                     </summary>
+//                     <div id="${currentConversationId}-${message.tool_calls[0].id}-content" class="px-4 py-3 bg-white rounded-b-md">
+//                         <!-- 初始内容为空 -->
+//                     </div>
+//                 `;
+//                 messageOutput.appendChild(messageElement);
+//             } else {
+//                 const messageElement = document.createElement('div');
+//                 messageElement.className = 'mb-6';
+//                 messageElement.innerHTML = `
+//                     <div class="flex items-start">
+//                         <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+//                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-gray-600 lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+//                         </div>
+//                         <div class="flex-1">
+//                             <div class="font-medium mb-1">${message.name}</div>
+//                             <div id="${currentConversationId}">
+//                                 <details id="${message.tool_calls[0].id}-details" class="border-t first:border-t-0 border-gray-200 bg-gray-50">
+//                                     <summary class="cursor-pointer text-sm font-semibold select-none px-4 py-2 bg-gray-100 rounded-t-md">
+//                                         ${message.tool_calls[0].function.name} <span id="${currentConversationId}-${message.tool_calls[0].id}-status" class="ml-2 text-gray-500">✖ 未完成</span>
+//                                     </summary>
+//                                     <div id="${currentConversationId}-${message.tool_calls[0].id}-content" class="px-4 py-3 bg-white rounded-b-md">
+//                                         <!-- 初始内容为空 -->
+//                                     </div>
+//                                 </details>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 `;
+//                 chatMessages.appendChild(messageElement);
+//             }
+//         } else {
+//             const tool_call_id = message.tool_call_id
+//             if (tool_call_id) {
+//                 // 获取元素
+//                 const statusElement = document.getElementById(currentConversationId + '-' + tool_call_id + '-status');
+//                 const contentElement = document.getElementById(currentConversationId + '-' + tool_call_id + '-content');
+//
+//                 // 更新状态为已完成
+//                 statusElement.textContent = '✔ 已完成';
+//                 statusElement.className = 'ml-2 text-green-500';
+//
+//                 // 更新内容
+//                 contentElement.innerHTML = `<pre class="text-xs text-gray-800 whitespace-pre-wrap">${message.content}</pre>`;
+//             } else {
+//                 let messageOutput = document.getElementById(currentConversationId);
+//                 if (!messageOutput) {
+//                     const messageElement = document.createElement('div');
+//                     messageElement.className = 'mb-6';
+//                     messageElement.innerHTML = `
+//                         <div class="flex items-start">
+//                             <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+//                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-gray-600 lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+//                             </div>
+//                             <div class="flex-1">
+//                                 <div class="font-medium mb-1">${message.name}</div>
+//                                 <div id="${currentConversationId}">
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     `;
+//                     chatMessages.appendChild(messageElement);
+//                     messageOutput = document.getElementById(currentConversationId);
+//                 }
+//
+//                 const messageElement = document.createElement('div');
+//                 messageElement.className = 'text-sm whitespace-pre-wrap break-words'; // 关键样式
+//                 messageOutput.appendChild(messageElement);
+//
+//                 if (isLoad) {
+//                     messageElement.innerHTML = parseBoldText(message.content); // 使用innerHTML
+//                     messageOutput.scrollTop = messageOutput.scrollHeight;
+//                 } else {
+//                     // 流式输出
+//                     let index = 0;
+//                     const content = message.content;
+//
+//                     const streamInterval = setInterval(() => {
+//                         if (index < content.length) {
+//                             const chunk = content.slice(0, index + 1);
+//                             messageElement.innerHTML = parseBoldText(chunk); // 使用innerHTML
+//                             index++;
+//                             messageOutput.scrollTop = messageOutput.scrollHeight;
+//                         } else {
+//                             clearInterval(streamInterval);
+//                             currentConversationId = null;
+//                             sendButton.disabled = false;
+//                             sendButton.classList.remove('opacity-50', 'cursor-not-allowed');
+//                         }
+//                     }, 10);
+//                 }
+//
+//             }
+//         }
+//     }
+//
+//     // Update lucide icons
+//     // lucide.createIcons();
+// }
+
+let tool_call_id = null
+
 // Add a message to the UI
 function addMessageToUI(message, isLoad = false) {
     if (message.sender === 'user') {
@@ -168,7 +303,7 @@ function addMessageToUI(message, isLoad = false) {
         messageElement.innerHTML = `
             <div class="flex items-start">
                 <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-white mr-4">
-                    L
+                    U
                 </div>
                 <div class="flex-1">
                     <div class="font-medium mb-1">${message.name} <span class="text-xs text-gray-500">${message.time}</span></div>
@@ -181,44 +316,24 @@ function addMessageToUI(message, isLoad = false) {
         chatMessages.appendChild(messageElement);
     } else {
         if (message.tool_calls && message.tool_calls.length > 0) {
-            const messageOutput = document.getElementById(currentConversationId);
-            if (messageOutput) {
-                const messageElement = document.createElement('details');
-                messageElement.className = 'border-t first:border-t-0 border-gray-200 bg-gray-50';
-                messageElement.id = message.tool_calls[0].id + '-details';
-                messageElement.innerHTML = `
-                    <summary class="cursor-pointer text-sm font-semibold select-none px-4 py-2 bg-gray-100 rounded-t-md">
-                        ${message.tool_calls[0].function.name} <span id="${currentConversationId}-${message.tool_calls[0].id}-status" class="ml-2 text-gray-500">✖ 未完成</span>
-                    </summary>
-                    <div id="${currentConversationId}-${message.tool_calls[0].id}-content" class="px-4 py-3 bg-white rounded-b-md">
-                        <!-- 初始内容为空 -->
-                    </div>
-                `;
-                messageOutput.appendChild(messageElement);
+            if (message.tool_calls[0].id) {
+                addToolCallToUI(message)
+                tool_call_id = message.tool_calls[0].id
             } else {
-                const messageElement = document.createElement('div');
-                messageElement.className = 'mb-6';
-                messageElement.innerHTML = `
-                    <div class="flex items-start">
-                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-gray-600 lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
-                        </div>
-                        <div class="flex-1">
-                            <div class="font-medium mb-1">${message.name}</div>
-                            <div id="${currentConversationId}">
-                                <details id="${message.tool_calls[0].id}-details" class="border-t first:border-t-0 border-gray-200 bg-gray-50">
-                                    <summary class="cursor-pointer text-sm font-semibold select-none px-4 py-2 bg-gray-100 rounded-t-md">
-                                        ${message.tool_calls[0].function.name} <span id="${currentConversationId}-${message.tool_calls[0].id}-status" class="ml-2 text-gray-500">✖ 未完成</span>
-                                    </summary>
-                                    <div id="${currentConversationId}-${message.tool_calls[0].id}-content" class="px-4 py-3 bg-white rounded-b-md">
-                                        <!-- 初始内容为空 -->
-                                    </div>
-                                </details>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                chatMessages.appendChild(messageElement);
+                const contentElement = document.getElementById(currentConversationId + '-' + tool_call_id + '-content');
+                // 尝试查找现有的 <pre> 元素
+                let preElement = contentElement.querySelector('pre');
+
+                if (!preElement) {
+                    // 如果还没有 <pre>，说明是第一次插入内容
+                    preElement = document.createElement('pre');
+                    preElement.className = 'text-xs text-gray-800 whitespace-pre-wrap';
+                    preElement.textContent = message.content;
+                    contentElement.appendChild(preElement);
+                } else {
+                    // 已有 <pre>，就在现有基础上追加
+                    preElement.textContent += message.content;
+                }
             }
         } else {
             const tool_call_id = message.tool_call_id
@@ -226,19 +341,67 @@ function addMessageToUI(message, isLoad = false) {
                 // 获取元素
                 const statusElement = document.getElementById(currentConversationId + '-' + tool_call_id + '-status');
                 const contentElement = document.getElementById(currentConversationId + '-' + tool_call_id + '-content');
+                let preElement = contentElement.querySelector('pre');
 
                 // 更新状态为已完成
                 statusElement.textContent = '✔ 已完成';
                 statusElement.className = 'ml-2 text-green-500';
 
                 // 更新内容
-                contentElement.innerHTML = `<pre class="text-xs text-gray-800 whitespace-pre-wrap">${message.content}</pre>`;
+                // contentElement.innerHTML = `<pre class="text-xs text-gray-800 whitespace-pre-wrap">${message.content}</pre>`;
+                preElement.textContent = message.content;
             } else {
                 let messageOutput = document.getElementById(currentConversationId);
+
                 if (!messageOutput) {
-                    const messageElement = document.createElement('div');
-                    messageElement.className = 'mb-6';
-                    messageElement.innerHTML = `
+                    addMessageOutputToUI(message)
+                    messageOutput = document.getElementById(currentConversationId);
+                }
+
+                // 尝试查找现有的 <pre> 元素
+                let preElement = document.getElementById(currentConversationId + '-' + tool_call_id + '-result');
+
+                if (!preElement) {
+                    // 如果还没有 <pre>，说明是第一次插入内容
+                    if (message.content !== "") {
+                        preElement = document.createElement('pre');
+                        preElement.id = currentConversationId + '-' + tool_call_id + '-result';
+                        preElement.className = 'text-xs text-gray-800 whitespace-pre-wrap';
+                        preElement.textContent = message.content;
+                        messageOutput.appendChild(preElement);
+                    }
+                } else {
+                    // 已有 <pre>，就在现有基础上追加
+                    preElement.textContent += message.content;
+                }
+
+            }
+        }
+    }
+}
+
+function addToolCallToUI(message) {
+    const messageOutput = document.getElementById(currentConversationId);
+    if (messageOutput) {
+        const messageElement = document.createElement('details');
+        messageElement.className = 'border-t first:border-t-0 border-gray-200 bg-gray-50 mb-1';
+        messageElement.id = message.tool_calls[0].id + '-details';
+        messageElement.innerHTML = `
+                    <summary class="cursor-pointer text-sm font-semibold select-none px-4 py-2 bg-gray-100 rounded-t-md">
+                        ${message.tool_calls[0].function.name} <span id="${currentConversationId}-${message.tool_calls[0].id}-status" class="ml-2 text-gray-500">✖ 未完成</span>
+                    </summary>
+                    <div id="${currentConversationId}-${message.tool_calls[0].id}-content" class="px-4 py-3 bg-white rounded-b-md">
+                        <!-- 初始内容为空 -->
+                    </div>
+                `;
+        messageOutput.appendChild(messageElement);
+    }
+}
+
+function addMessageOutputToUI(message) {
+    const messageElement = document.createElement('div');
+    messageElement.className = 'mb-6';
+    messageElement.innerHTML = `
                         <div class="flex items-start">
                             <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-gray-600 lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
@@ -250,43 +413,7 @@ function addMessageToUI(message, isLoad = false) {
                             </div>
                         </div>
                     `;
-                    chatMessages.appendChild(messageElement);
-                    messageOutput = document.getElementById(currentConversationId);
-                }
-
-                const messageElement = document.createElement('div');
-                messageElement.className = 'text-sm whitespace-pre-wrap break-words'; // 关键样式
-                messageOutput.appendChild(messageElement);
-
-                if (isLoad) {
-                    messageElement.innerHTML = parseBoldText(message.content); // 使用innerHTML
-                    messageOutput.scrollTop = messageOutput.scrollHeight;
-                } else {
-                    // 流式输出
-                    let index = 0;
-                    const content = message.content;
-
-                    const streamInterval = setInterval(() => {
-                        if (index < content.length) {
-                            const chunk = content.slice(0, index + 1);
-                            messageElement.innerHTML = parseBoldText(chunk); // 使用innerHTML
-                            index++;
-                            messageOutput.scrollTop = messageOutput.scrollHeight;
-                        } else {
-                            clearInterval(streamInterval);
-                            currentConversationId = null;
-                            sendButton.disabled = false;
-                            sendButton.classList.remove('opacity-50', 'cursor-not-allowed');
-                        }
-                    }, 10);
-                }
-
-            }
-        }
-    }
-
-    // Update lucide icons
-    // lucide.createIcons();
+    chatMessages.appendChild(messageElement);
 }
 
 // 转换函数：将 **文本** 替换为 <strong>文本</strong>
@@ -296,11 +423,11 @@ function parseBoldText(text) {
 
 function dealResponse(json) {
     // Remove typing indicator
-    const typingContainer = document.querySelector('.typing-container');
-    if (typingContainer) {
-        console.info("remove")
-        typingContainer.remove();
-        currentConversationId = 'conversation-' + currentConversation.sessionId + '-' + currentConversation.messages.length;
+    // const typingContainer = document.querySelector('.typing-container');
+    const typingDiv = document.getElementById(`${currentConversationId}-typing`);
+    if (typingDiv) {
+        typingDiv.remove();
+        // currentConversationId = 'conversation-' + currentConversation.sessionId + '-' + currentConversation.messages.length;
     }
 
     // Create response message
