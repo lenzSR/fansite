@@ -1,7 +1,7 @@
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
-    
+
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const header = document.querySelector('header');
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // Also adjust opacity based on scroll position for a fade effect
                         // 减小系数，使透明度变化更加缓慢
-                        const opacity = Math.max(0.6 - (scrollPosition / (window.innerHeight * 3)), 0.2);
+                        const opacity = Math.max(0.4 - (scrollPosition / (window.innerHeight * 3)), 0.2);
                         parallaxBg.style.opacity = opacity;
                     }
                 }
@@ -198,38 +198,6 @@ function initChat() {
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
     const sendButton = document.getElementById('send-message');
-
-    // Sample Q&A database
-    const qaDatabase = {
-        "tayori的名字有什么特殊含义吗?": "\"tayori\" (便り) 这个名字，寄托了成员们希望在某些特别的时刻，他们的音乐能够成为听众心灵的依靠和慰藉，如同远方传来的温暖讯息。✉️",
-        "tayori的名字有什么含义": "\"tayori\" (便り) 这个名字，寄托了成员们希望在某些特别的时刻，他们的音乐能够成为听众心灵的依靠和慰藉，如同远方传来的温暖讯息。✉️",
-        "乐队是什么时候成立的?": "tayori正式成立于2023年7月22日！raku和tazuneru原本是islet组合，后来与主唱isui碰撞出火花，就组成了现在的tayori。✨",
-        "乐队什么时候成立": "tayori正式成立于2023年7月22日！raku和tazuneru原本是islet组合，后来与主唱isui碰撞出火花，就组成了现在的tayori。✨",
-        "成立时间": "tayori正式成立于2023年7月22日！",
-        "成员们各自的角色是什么?": "isui是我们的主唱，拥有清澈而富有感染力的声线。raku负责作曲，是旋律的织造者。tazuneru则负责音乐制作和编曲，擅长音色的打磨和氛围营造。🎵",
-        "成员角色": "isui是我们的主唱，拥有清澈而富有感染力的声线。raku负责作曲，是旋律的织造者。tazuneru则负责音乐制作和编曲，擅长音色的打磨和氛围营造。🎵",
-        "在哪里可以听到tayori的歌?": "可以在网易云音乐搜索\"tayori\"，或访问我们的B站官方账号：tayori_official。Instagram和官网也会更新最新音乐资讯哦！🎧",
-        "在哪里听歌": "可以在网易云音乐搜索\"tayori\"，或访问我们的B站官方账号：tayori_official。Instagram和官网也会更新最新音乐资讯哦！🎧",
-        "如何购买周边": "目前可以通过我们的官方网站 tayori.bitfan.id 了解和购买乐队周边产品，请关注官方社交平台获取最新周边发售信息！🛍️",
-        "tayori参加过哪些演出?": "我们曾参加过UF游戏音乐嘉年华等活动，也举办过个人演唱会如\"春を待つ\"。关注我们的社交媒体可以获取最新演出信息！🎤",
-        "有什么演出": "我们曾参加过UF游戏音乐嘉年华等活动，也举办过个人演唱会如\"春を待つ\"。关注我们的社交媒体可以获取最新演出信息！🎤",
-        "你们的音乐风格是什么": "tayori的音乐展现了多元的包容性，不拘泥于特定风格，致力于探索声音的无限可能，创造能够触动人心的旋律。🎶",
-        "音乐风格": "tayori的音乐展现了多元的包容性，不拘泥于特定风格，致力于探索声音的无限可能，创造能够触动人心的旋律。🎶",
-        "isui是谁": "isui (倚水) 是tayori的主唱，拥有清澈而富有感染力的声线。她的歌声为乐队的乐曲注入灵魂，细腻地诠释每一份情感，引领听众进入tayori的音乐世界。🎤",
-        "raku是谁": "raku是tayori的作曲家，也是乐队的初代成员之一（前islet组合）。他擅长捕捉灵感，编织出多元且富有层次的旋律，为tayori的音乐奠定了坚实的基础。🎼",
-        "tazuneru是谁": "tazuneru是tayori的音乐制作人，同为乐队的初代成员（前islet组合）。他在音乐制作和编曲方面扮演着关键角色，精于音色的打磨和整体氛围的营造，赋予tayori作品独特的质感和深度。🎛️",
-        "有粉丝群吗": "请关注我们的官方社交媒体账号获取粉丝社群信息！我们会在那里发布最新的粉丝活动和互动信息。💕",
-        "帮助": "你可以向我询问以下问题：\n- tayori的名字含义\n- 乐队成立时间\n- 成员角色介绍\n- 在哪里听tayori的音乐\n- 乐队的演出经历\n- 音乐风格特点\n- 如何购买周边\n- 关于个别成员的信息\n或者任何你想了解的关于tayori的问题！",
-        "help": "你可以向我询问以下问题：\n- tayori的名字含义\n- 乐队成立时间\n- 成员角色介绍\n- 在哪里听tayori的音乐\n- 乐队的演出经历\n- 音乐风格特点\n- 如何购买周边\n- 关于个别成员的信息\n或者任何你想了解的关于tayori的问题！"
-    };
-
-    // Default responses for unrecognized queries
-    const defaultResponses = [
-        "抱歉，我不太确定你的问题。你可以尝试询问关于tayori的成立、成员、音乐作品或演出信息等。输入\"帮助\"可查看预设问题列表。",
-        "这个问题有点复杂，我可能无法准确回答。你可以尝试问一些关于乐队基本信息的问题，或输入\"帮助\"查看可用问题列表。",
-        "很抱歉，我目前没有这个问题的答案。请尝试换一种方式提问，或输入\"帮助\"查看我能回答的问题类型。",
-        "作为一个简单的问答机器人，我对这个问题没有足够的信息。请试试关于tayori乐队历史、成员或音乐作品的问题吧！"
-    ];
 
     // Function to add a user message to the chat
     function addUserMessage(message) {
@@ -277,44 +245,14 @@ function initChat() {
     }
 
     // Function to get a response based on the user's message
-    function getResponse(message) {
-        message = message.toLowerCase();
+    // This will be overridden by language-switcher.js if language is changed
+    window.getResponse = function(message) {
+        // Get current language
+        const currentLang = localStorage.getItem('tayori-language') || 'zh';
 
-        // Check if we have a direct match
-        for (const [question, answer] of Object.entries(qaDatabase)) {
-            if (message.includes(question.toLowerCase())) {
-                return answer;
-            }
-        }
-
-        // Check for keyword matches
-        if (message.includes('名字') || message.includes('含义') || message.includes('寓意')) {
-            return qaDatabase["tayori的名字有什么特殊含义吗?"];
-        } else if (message.includes('成立') || message.includes('什么时候') || message.includes('历史')) {
-            return qaDatabase["乐队是什么时候成立的?"];
-        } else if (message.includes('角色') || message.includes('职责') || message.includes('做什么')) {
-            return qaDatabase["成员们各自的角色是什么?"];
-        } else if (message.includes('听') || message.includes('歌') || message.includes('音乐') || message.includes('作品')) {
-            return qaDatabase["在哪里可以听到tayori的歌?"];
-        } else if (message.includes('演出') || message.includes('表演') || message.includes('live') || message.includes('演唱会')) {
-            return qaDatabase["tayori参加过哪些演出?"];
-        } else if (message.includes('周边') || message.includes('商品') || message.includes('购买')) {
-            return qaDatabase["如何购买周边"];
-        } else if (message.includes('isui') || message.includes('倚水')) {
-            return qaDatabase["isui是谁"];
-        } else if (message.includes('raku')) {
-            return qaDatabase["raku是谁"];
-        } else if (message.includes('tazuneru') || message.includes('tazu')) {
-            return qaDatabase["tazuneru是谁"];
-        } else if (message.includes('风格') || message.includes('类型') || message.includes('style')) {
-            return qaDatabase["音乐风格"];
-        } else if (message.includes('粉丝') || message.includes('群') || message.includes('club')) {
-            return qaDatabase["有粉丝群吗"];
-        }
-
-        // Return a random default response for unrecognized queries
-        return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-    }
+        // Use the localized chat responses from translations.js
+        return getLocalizedChatResponse(message, currentLang);
+    };
 
     // Event listeners
     // sendButton.addEventListener('click', sendMessage);

@@ -52,7 +52,7 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.0.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,11 +83,12 @@
                     </a>
                 </div>
                 <nav class="hidden md:flex items-center space-x-6">
-                    <a href="#about" class="text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">关于乐队</a>
-                    <a href="#members" class="text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">成员介绍</a>
-                    <a href="#music" class="text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">音乐作品</a>
-                    <a href="#chat" class="text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">粉丝问答</a>
-                    <a href="#connect" class="text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">官方链接</a>
+                    <a href="#about" class="nav-link text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">关于乐队</a>
+                    <a href="#members" class="nav-link text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">成员介绍</a>
+                    <a href="#music" class="nav-link text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">音乐作品</a>
+                    <a href="#chat" class="nav-link text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">粉丝问答</a>
+                    <a href="#message" class="nav-link text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">粉丝留言</a>
+                    <a href="#connect" class="nav-link text-sm font-medium text-tayori-text hover:text-tayori-accent transition-colors">官方链接</a>
                 </nav>
                 <div class="flex items-center md:hidden">
                     <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-tayori-text hover:text-tayori-accent hover:bg-tayori-gray focus:outline-none">
@@ -104,6 +105,7 @@
                 <a href="#members" class="block px-3 py-2 rounded-md text-base font-medium text-tayori-text hover:bg-tayori-gray hover:text-tayori-accent">成员介绍</a>
                 <a href="#music" class="block px-3 py-2 rounded-md text-base font-medium text-tayori-text hover:bg-tayori-gray hover:text-tayori-accent">音乐作品</a>
                 <a href="#chat" class="block px-3 py-2 rounded-md text-base font-medium text-tayori-text hover:bg-tayori-gray hover:text-tayori-accent">粉丝问答</a>
+                <a href="#message" class="block px-3 py-2 rounded-md text-base font-medium text-tayori-text hover:bg-tayori-gray hover:text-tayori-accent">粉丝留言</a>
                 <a href="#connect" class="block px-3 py-2 rounded-md text-base font-medium text-tayori-text hover:bg-tayori-gray hover:text-tayori-accent">官方链接</a>
             </div>
         </div>
@@ -113,6 +115,8 @@
         <section class="relative overflow-hidden min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-tayori-gray" aria-label="头图" id="hero-section">
             <div class="absolute inset-0 z-0 overflow-hidden">
 <!--                <img src="https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3576432644412132805" alt="Tayori乐队" class="hero-bg-image w-full h-full object-cover opacity-20 mix-blend-multiply" id="parallax-bg">-->
+                <img src="assets/IAIAIIO_Memento.svg" alt="Tayori乐队" class="hero-bg-image w-full h-full object-cover opacity-20 mix-blend-multiply" style="opacity: 0.4;" id="parallax-bg">
+
             </div>
             <div class="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center py-16">
                 <h1 class="hero-title text-6xl md:text-7xl font-bold tracking-tight text-tayori-dark mb-6 font-geist-mono">
@@ -185,8 +189,8 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark hover:border-tayori-accent transition-all card-hover stagger-1" data-scroll-animation="slide-up">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10" data-scroll-animation="slide-up">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark hover:border-tayori-accent transition-all card-hover stagger-1">
                         <div class="h-64 overflow-hidden">
                             <img src="https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3474967578479854734" alt="isui" class="w-full h-full object-cover object-top">
                         </div>
@@ -205,7 +209,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark hover:border-tayori-accent transition-all card-hover stagger-2" data-scroll-animation="slide-up">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark hover:border-tayori-accent transition-all card-hover stagger-2">
                         <div class="h-64 overflow-hidden">
                             <img src="https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3582955785074313224" alt="raku" class="w-full h-full object-cover object-center">
                         </div>
@@ -224,7 +228,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark hover:border-tayori-accent transition-all card-hover stagger-3" data-scroll-animation="slide-up">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark hover:border-tayori-accent transition-all card-hover stagger-3">
                         <div class="h-64 overflow-hidden">
                             <img src="https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3603977455511850333" alt="tazuneru" class="w-full h-full object-cover object-center">
                         </div>
@@ -258,10 +262,20 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-tayori-gray rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark group hover:border-tayori-accent transition-all card-hover stagger-1" data-scroll-animation="slide-up">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-scroll-animation="slide-up">
+                    <div class="bg-tayori-gray rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark group hover:border-tayori-accent transition-all card-hover stagger-1">
                         <div class="aspect-video overflow-hidden bg-tayori-accent/5 relative group">
-                            <img src="assets/月の唄.jpeg" alt="月の唄" class="w-full h-full object-cover transition-transform group-hover:scale-105">
+<!--                            <img src="assets/月の唄.jpeg" alt="月の唄" class="w-full h-full object-cover transition-transform group-hover:scale-105">-->
+                            <!-- 默认 SVG 显示，悬停时隐藏 -->
+                            <img src="assets/OEnI.svg"
+                                 alt="月の唄"
+                                 class="w-full h-full object-cover transition-opacity duration-300 absolute inset-0 group-hover:opacity-0">
+
+                            <!-- 悬停时显示的 SVG -->
+                            <img src="assets/OEnI_hover.svg"
+                                 alt="月の唄（悬停）"
+                                 class="w-full h-full object-cover transition-opacity duration-300 absolute inset-0 opacity-0 group-hover:opacity-100">
+
                             <div class="absolute inset-0 bg-gradient-to-t from-tayori-dark/60 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button class="bg-white/90 text-tayori-accent rounded-full w-16 h-16 flex items-center justify-center hover:bg-white transition-colors animate-float">
                                     <i data-lucide="play" class="text-2xl"></i>
@@ -288,9 +302,20 @@
                         </div>
                     </div>
 
-                    <div class="bg-tayori-gray rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark group hover:border-tayori-accent transition-all card-hover stagger-2" data-scroll-animation="slide-up">
+                    <div class="bg-tayori-gray rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark group hover:border-tayori-accent transition-all card-hover stagger-2">
                         <div class="aspect-video overflow-hidden bg-tayori-accent/5 relative group">
-                            <img src="assets/メメント (Memento).png" alt="メメント (Memento)" class="w-full h-full object-cover transition-transform group-hover:scale-105">
+<!--                            <img src="assets/2.png" alt="メメント (Memento)" class="w-full h-full object-cover transition-transform group-hover:scale-105">-->
+                            <!-- 默认 SVG 显示，悬停时隐藏 -->
+                            <img src="assets/IAIAIIO_Memento.svg"
+                                 alt="メメント"
+                                 class="w-full h-full object-cover transition-opacity duration-300 absolute inset-0 group-hover:opacity-0">
+
+                            <!-- 悬停时显示的 SVG -->
+                            <img src="assets/IAIAIIO_Memento_hover.svg"
+                                 alt="メメント（悬停）"
+                                 class="w-full h-full object-cover transition-opacity duration-300 absolute inset-0 opacity-0 group-hover:opacity-100">
+
+
                             <div class="absolute inset-0 bg-gradient-to-t from-tayori-dark/60 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button class="bg-white/90 text-tayori-accent rounded-full w-16 h-16 flex items-center justify-center hover:bg-white transition-colors animate-float">
                                     <i data-lucide="play" class="text-2xl"></i>
@@ -317,9 +342,18 @@
                         </div>
                     </div>
 
-                    <div class="bg-tayori-gray rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark group hover:border-tayori-accent transition-all card-hover stagger-3" data-scroll-animation="slide-up">
+                    <div class="bg-tayori-gray rounded-xl overflow-hidden shadow-sm border border-tayori-gray-dark group hover:border-tayori-accent transition-all card-hover stagger-3">
                         <div class="aspect-video overflow-hidden bg-tayori-accent/5 relative group">
-                            <img src="https://p2.bahamut.com.tw/HOME/creationCover/04/0005868304_B.JPG" alt="風のたより (Kaze no Tayori)" class="w-full h-full object-cover transition-transform group-hover:scale-105">
+<!--                            <img src="https://p2.bahamut.com.tw/HOME/creationCover/04/0005868304_B.JPG" alt="風のたより (Kaze no Tayori)" class="w-full h-full object-cover transition-transform group-hover:scale-105">-->
+                            <img src="assets/0005868304_B.svg"
+                                 alt="風のたより (Kaze no Tayori)"
+                                 class="w-full h-full object-cover transition-opacity duration-300 absolute inset-0 group-hover:opacity-0">
+
+                            <!-- 悬停时显示的 SVG -->
+                            <img src="assets/0005868304_B_hover.svg"
+                                 alt="風のたより (Kaze no Tayori)（悬停）"
+                                 class="w-full h-full object-cover transition-opacity duration-300 absolute inset-0 opacity-0 group-hover:opacity-100">
+
                             <div class="absolute inset-0 bg-gradient-to-t from-tayori-dark/60 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button class="bg-white/90 text-tayori-accent rounded-full w-16 h-16 flex items-center justify-center hover:bg-white transition-colors animate-float">
                                     <i data-lucide="play" class="text-2xl"></i>
@@ -383,23 +417,14 @@
                     </div>
 
                     <div id="chat-messages" class="p-4 h-96 overflow-y-auto space-y-6">
-                        <!-- System Status Message -->
-<!--                        <div class="mb-6">-->
-<!--                            <div class="flex items-start">-->
-<!--                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-4">-->
-<!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-gray-600 lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>-->
-<!--                                </div>-->
-<!--                                <div class="flex-1">-->
-<!--                                    <div class="font-medium mb-1">tayori Chat | AI机器人</div>-->
-<!--                                    <div class="text-sm">你好，我是tayori Chat，你可以问我关于tayori的任何问题！</div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <!--Messages -->
                     </div>
 
                     <div class="border-t border-tayori-gray-dark/30 p-4">
-                        <div class="relative bg-tayori-gray">
-                            <input id="chat-input" type="text" placeholder="向tayori发送消息..." class="bg-transparent border-0 flex-1 py-3 px-4 text-tayori-text placeholder-gray-500 focus:outline-none focus:ring-0">
+                        <div class="relative">
+                            <textarea id="chat-input" rows="3" placeholder="向tayori发送消息..."
+                                      class="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent resize-none"
+                            ></textarea>
                             <div class="absolute right-2 bottom-2 flex items-center space-x-2">
                                 <button id="send-message" class="p-1 text-gray-400 hover:text-gray-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
@@ -412,7 +437,86 @@
             </div>
         </section>
 
-        <section id="connect" class="py-20 bg-white" aria-label="官方链接">
+        <section id="message" class="py-20 bg-white" aria-label="粉丝留言">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-4 comments-container" data-scroll-animation="fade-in">
+                    <p class="text-base text-tayori-accent font-semibold tracking-wide uppercase comments-container">粉丝留言</p>
+                    <h2 class="mt-2 text-3xl leading-8 font-bold tracking-tight text-tayori-dark sm:text-4xl">
+                        留下你对tayori的感想
+                    </h2>
+                    <div class="mt-4 max-w-2xl mx-auto text-xl text-tayori-text">
+                        <div class="w-12 h-1 bg-tayori-accent mx-auto my-6"></div>
+                    </div>
+                    <div id="add-comment-form" class="mb-4 mt-8">
+                        <!-- Header with welcome message and logout button -->
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Leave a Comment</h3>
+
+                            <!-- Username input field (shown by default) -->
+                            <div id="username-input-container" class="flex items-center space-x-2">
+                                <label for="username-input" class="text-sm text-gray-600 dark:text-gray-300">如何称呼您？</label>
+                                <input type="text" id="username-input" class="px-3 py-1 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm" placeholder="您的名字" />
+                                <button id="save-username-btn" class="p-1.5 text-gray-500 hover:text-gray-700 dark:hover:text-gray-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+
+                            <!-- Welcome message (hidden by default) -->
+                            <div id="welcome-message-container" class="flex items-center space-x-3 hidden">
+                                <span class="text-sm text-gray-600 dark:text-gray-300">Welcome,
+                                    <span class="font-medium" id="username-display">User</span>
+                                </span>
+                                <button id="logout-btn" class="p-1.5 text-gray-500 hover:text-gray-700 dark:hover:text-gray-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <form id="comment-form" class="space-y-4">
+                            <!-- 引用内容容器（初始隐藏） -->
+                            <div id="quoted-comment" class="p-2 bg-gray-100 dark:bg-gray-700 rounded-md text-sm text-gray-800 dark:text-gray-100 flex justify-between items-center hidden">
+                                <div id="quoted-text"></div>
+                                <!-- 将按钮放在这里，并用flex-right来确保它右对齐 -->
+                                <button id="cancel-quote" class="ml-2 text-gray-500 hover:text-gray-800 dark:hover:text-white">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+
+                            <div class="border-t border-gray-200 bg-white p-4">
+                                <div class="relative">
+                                    <textarea id="message-input" rows="3" placeholder="Type your message here..."
+                                              class="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent resize-none"
+                                    ></textarea>
+                                    <div class="absolute right-2 bottom-2 flex items-center space-x-2">
+                                        <!-- <button class="p-1 text-gray-400 hover:text-gray-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 lucide lucide-paperclip-icon lucide-paperclip"><path d="M13.234 20.252 21 12.3"/><path d="m16 6-8.414 8.586a2 2 0 0 0 0 2.828 2 2 0 0 0 2.828 0l8.414-8.586a4 4 0 0 0 0-5.656 4 4 0 0 0-5.656 0l-8.415 8.585a6 6 0 1 0 8.486 8.486"/></svg>
+                                        </button> -->
+                                        <button id="send-message-btn" class="p-1 text-gray-400 hover:text-gray-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between mt-2 text-xs text-gray-500">
+                                    <div>Press Enter to send, Shift+Enter for new line</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div data-scroll-animation="slide-up">
+                    <div id="comments-list" class="comments-scroll-container">
+                        <h3 id="comments-count" class="text-lg font-semibold mb-4">0 Comments</h3>
+
+                        <div class="space-y-6 comments-wrapper">
+                            <!-- Comments will be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="connect" class="py-20 bg-tayori-gray" aria-label="官方链接">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16" data-scroll-animation="fade-in">
                     <p class="text-base text-tayori-accent font-semibold tracking-wide uppercase">官方链接</p>
@@ -466,7 +570,10 @@
         </div>
     </footer>
 
+    <script src="translations.js?v=1.0.0"></script>
     <script src="script.js?v=1.0.1"></script>
     <script src="chat-app.js?v=1.0.1"></script>
+    <script src="comment.js?v=1.0.1"></script>
+    <script src="language-switcher.js?v=1.0.0"></script>
 </body>
 </html>
